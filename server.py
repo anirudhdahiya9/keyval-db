@@ -19,8 +19,9 @@ class ServerSession:
             print("Received request: ", message)
             validated_cmd, parsed_args = self.__session.validate_cmd(message)
             if validated_cmd is None:
-                continue
-            output = self.__session.process_command(validated_cmd[0], parsed_args)
+                output = parsed_args
+            else:
+                output = self.__session.process_command(validated_cmd[0], parsed_args)
             print(output)
             socket.send_string(str(output))
 

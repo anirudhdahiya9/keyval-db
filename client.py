@@ -54,9 +54,8 @@ class ClientSession:
             validated_cmd, parsed_args = self.__validate_cmd(user_input)
             if validated_cmd is None:
                 continue
-            if validated_cmd=='EXIT':
+            if validated_cmd[0] == 'EXIT':
                 sys.exit(0)
-
             output = self.__process_command(user_input)
             if output:
                 print(str(output))

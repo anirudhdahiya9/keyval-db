@@ -12,6 +12,7 @@ Requirements:
 `pip install -r requirements.txt`
 
 ## Usage
+There are primarily two modes of execution:
 * To run the main engine and use the in-house shell:
 
     `python engine.py`
@@ -19,7 +20,7 @@ Requirements:
     This inhouse shell directly interacts with the database object
 
 
-* [Experimental] : To use the server-client functionality
+* To use the server-client functionality
 
     `python server.py --port 2340`
 
@@ -27,10 +28,22 @@ Requirements:
 
 ## Features
 * On server redis shell
-* Client-Server setup: Serve multiple  clients, even remote connections with robust message-queue based communication
+    
+    Access Local Server with a Redis like shell to directly access database objects.
+    
+* Client-Server setup
+    
+    Concurrently serve multiple remotely or locally connected clients with robust message-queue based communication.
  protocol.
-* Various persistence options:
-    * Time interval based parallel RDB serialization (Emulates Redis RDB serialization)
+* Multiple persistence options:
+    Like Redis, Redis-Clone also provides a variety of persistence configurations.
+    
+    * Time interval based parallel RDB serialization (Emulates Redis RDB serialization) 
+    
+        Set off a parallel serialization process which stores the database snapshot while the main server continues
+         to serve clients. Also flushes the current log state to keep log file sizes in check. See `engine.py`'s 
+         `--RDB_timeout` and `--RDB_persistence` options for more details.
+        
     * Log based serialization (Emulates Redis AOF)
     * Hybrid RDB + AOF Journalling (Work in Progress)
   

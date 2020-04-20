@@ -27,14 +27,14 @@ Requirements:
 
 ## Features
 * On server redis shell
-* Client-Server setup
+* Client-Server setup: Serve multiple  clients, even remote connections with robust message-queue based communication
+ protocol.
 * Various persistence options:
     * Time interval based parallel RDB serialization (Emulates Redis RDB serialization)
     * Log based serialization (Emulates Redis AOF)
     * Hybrid RDB + AOF Journalling (Work in Progress)
   
 * Variety of Redis commands supported (All commands supported with all the options supported by Redis)
-    Note: Use `-` as a prefix character for options, eg `Redis> SET key val -NX`)
     * GET
     * SET
     * EXPIRE
@@ -45,6 +45,9 @@ Requirements:
     * ZADD
     * ZRANK
     * ZRANGE
+    
+   Note: Use `-` as a prefix character for options, eg `Redis> SET key val -NX`)
+  
 * Robust parser for Redis commands. Detects positional and optional arguments, ensures correct argument logic and
  type consistency, just like regular linux utilities.
 * Helpful output message for commands. For example, use `Redis> GET -h` to output a helpful description of the COMMAND

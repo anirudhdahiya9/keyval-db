@@ -44,6 +44,8 @@ class ClientSession:
         return message
 
     def shell(self):
+        if not self.__socket:
+            self.connect()
         prompt = 'Redis> '
 
         while True:
@@ -59,7 +61,6 @@ class ClientSession:
 
 def main(args):
     session = ClientSession(args)
-    session.connect()
     session.shell()
 
 

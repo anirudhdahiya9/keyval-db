@@ -18,7 +18,8 @@ To run the main engine and use the in-house shell:
 [Experimental]
 To use the server-client functionality
 `python server.py --port 2340`
-` python client.py --server_ip localhost --server_port 2340`
+
+`python client.py --server_ip localhost --server_port 2340`
 
 ## Features
 
@@ -46,4 +47,6 @@ To use the server-client functionality
 4. We also use a lock on the parallel process `rdb_serialize`, which prevents more than one invocation of the function at a time. This prevents concurrent serialization of data, which could break the logs and serialized database pickles.
 
 #### 4. Does your implementation support multi threaded operations? If No why can’t it be? If yes then how ?
-> Due to the Global Interpreter Lock in python, threads in python are efficient only to paralellize I/O bound operations. Also, as in the redis implementation, only one transaction could be running at a time on the database. To circumvent issues regarding locks on shared objects, we instead rely on multiprocessing. We use it for object serialization. I also use multiprocessing to fork a child process which does parallel serialization while the actual engine can continue to process transactions on the parent database instance.
+> Due to the Global Interpreter Lock in python, threads in python are efficient only to paralellize I/O bound
+> operations. Also, as in the redis implementation, only one transaction can run at a time on the database. To
+> circumvent issues regarding locks on shared objects, we instead rely on multiprocessing. I use it for object serialization. I also use multiprocessing to fork a child process which does parallel serialization while the actual engine can continue to process transactions on the parent database instance.

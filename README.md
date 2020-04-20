@@ -58,7 +58,29 @@ Requirements:
     usage: SET [-h] [-EX EX | -PX PX] [-NX | -XX] [-KEEPTTL] key value
   ```
     
-* Helpful output message for commands. For example, use `Redis> GET -h` to output a helpful description of the COMMAND
+* Helpful output message for commands. For example, use `Redis> GET -h` to output a helpful description of the command
+
+    ```BASH
+    Redis> SET -h
+    usage: SET [-h] [-EX EX | -PX PX] [-NX | -XX] [-KEEPTTL] key value
+    
+    Set key to hold the string value. If key already holds a value, it is
+    overwritten, regardless of its type. Any previous time to live associated with
+    the key is discarded on successful SET operation.
+    
+    positional arguments:
+      key         Identifier for the key
+      value
+    
+    optional arguments:
+      -h, --help  show this help message and exit
+      -EX EX      Set the specified expire time, in seconds.
+      -PX PX      Set the specified expire time, in milliseconds.
+      -NX         Only set the key if it does not already exist.
+      -XX         Only set the key if it already exists.
+      -KEEPTTL    Retain the time to live associated with the key.
+    
+    ```
 
 
 

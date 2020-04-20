@@ -9,7 +9,7 @@ class ServerSession:
         self.__port = args.port
         self.__session = Session(args)
 
-    def serve_request(self):
+    def serve(self):
         context = zmq.Context()
         socket = context.socket(zmq.REP)
         socket.bind("tcp://*:%s" % self.__port)
@@ -21,13 +21,13 @@ class ServerSession:
             if validated_cmd is None:
                 continue
             output = self.__session.process_command(validated_cmd[0], parsed_args)
-
+            print(output)
             socket.send_string(str(output))
 
 
 def main(args):
     session = ServerSession(args)
-    session.serve_request()
+    session.serve()
 
 
 if __name__=="__main__":
@@ -38,7 +38,7 @@ if __name__=="__main__":
     parser.add_argument('--RDB_timeout', default=30, type=int, help="Save dataset state every x minutes")
     parser.add_argument('--AOF_persistence', type=bool, default=True, help="True if AOF persistence needed.")
     parser.add_argument('--debug', action='store_true')
-    parser.add_argument('--port', default=8234, type=int, help='port to serve at')
+    parser.add_argument('--port', default=5698, type=int, help='port to serve at')
     main_args = parser.parse_args()
 
     main(main_args)

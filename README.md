@@ -50,6 +50,14 @@ Requirements:
   
 * Robust parser for Redis commands. Detects positional and optional arguments, ensures correct argument logic and
  type consistency, just like regular linux utilities.
+   
+    Example
+    ```BASH
+  Redis> SET a
+    the following arguments are required: value
+    usage: SET [-h] [-EX EX | -PX PX] [-NX | -XX] [-KEEPTTL] key value
+  ```
+    
 * Helpful output message for commands. For example, use `Redis> GET -h` to output a helpful description of the COMMAND
 
 

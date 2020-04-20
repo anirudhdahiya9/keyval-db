@@ -68,7 +68,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser(description='Redis Client: A python implementation for simple Redis-like '
                                                  'database engine.')
     parser.add_argument('--server_host', default='localhost', help='Host Address for the server.')
-    parser.add_argument('--server_port', default='5698', help='Host Port for the server.')
+    parser.add_argument('--server_port', default=5698, type=int, help='Host Port for the server.')
 
     args = parser.parse_args()
     main(args)

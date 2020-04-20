@@ -96,7 +96,7 @@ class Session:
         except KeyError:
             return '(nil)'
         except Exception as e:
-            print(f"Error: {e}")
+            return f"Error: {e}"
 
     def __cmd_zrange(self, args):
         try:
@@ -127,7 +127,7 @@ class Session:
     def __cmd_set(self, args):
         if self.__cur_database:
             try:
-                self.__cur_database.set(args.key, args.value, args)
+                return self.__cur_database.set(args.key, args.value, args)
             except KeyError:
                 return '(nil)'
             except Exception as e:
@@ -138,22 +138,22 @@ class Session:
 
     def __cmd_expire(self, args):
         try:
-            self.__cur_database.expire(args.key, args.seconds)
+            return self.__cur_database.expire(args.key, args.seconds)
         except KeyError:
             return '(nil)'
         except Exception as e:
-            print(f"Error: {e}")
+            return f"Error: {e}"
 
     def __cmd_select(self, args):
         if self.__cur_database is not None:
-            print(f'Error: dataset `{self.__cur_database.name}` currently in use, cannot use multiple datasets.')
+            return f'Error: dataset `{self.__cur_database.name}` currently in use, cannot use multiple datasets.'
         else:
             self.restore(args.db_name)
-            print(f"Loaded Dataset `{self.__cur_database.name}`")
+            return f"Loaded Dataset `{self.__cur_database.name}`"
 
     def __cmd_deselect(self, args):
         if self.__cur_database is None:
-            print('Error: No database currently loaded')
+            return 'Error: No database currently loaded'
         else:
             self.__rdb_routine()
             self.__cur_database = None
@@ -164,14 +164,12 @@ class Session:
     def validate_cmd(self, cmd):
         command = shlex.split(cmd, comments=True)
         if command == [] or command[0] not in self.__known_commands:
-            print(f'Unrecognized Command')
-            print(f'The known commands are:')
-            print(' '.join(self.__known_commands))
-            return None, None
+            ret_val = f'Unrecognized Command\n' + f'The known commands are:\n' + ' '.join(self.__known_commands)
+            return None, ret_val
         else:
             if self.__cur_database is None and command[0] not in ('EXIT', 'SELECT'):
-                print(f"Select a database first before running operations.")
-                return None, None
+                ret_val = f"Select a database first before running operations."
+                return None, ret_val
             parsed_args = self.__parsers[command[0]].parse(command[1:])
             if parsed_args is not None:
                 return command, parsed_args
@@ -227,6 +225,7 @@ class Session:
             user_input = input(prompt)
             validated_cmd, parsed_args = self.validate_cmd(user_input)
             if validated_cmd is None:
+                print(parsed_args)
                 continue
 
             output = self.process_command(validated_cmd[0], parsed_args)

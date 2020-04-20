@@ -68,9 +68,9 @@ class Database:
         active = self.__check_active(key)
 
         if args.NX and active:
-            return
+            return '(nil)'
         elif args.XX and not active:
-            return
+            return '(nil)'
 
         timeout = None
         if args.KEEPTTL and active:
@@ -83,12 +83,16 @@ class Database:
 
         self.logger.info(f'SET {key} {val} {timeout}')
         self.data[key] = Value(val, timeout)
+        return 'OK'
 
     def expire(self, key, age):
         if self.__check_active(key):
             timeout = time.time() + int(age)
             self.logger.info(f'EXPIRE {key} {timeout}')
             self.data[key].timeout = timeout
+            return 1
+        else:
+            return 0
 
     def ttl(self, key):
         if self.__check_active(key):

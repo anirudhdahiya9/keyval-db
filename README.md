@@ -12,16 +12,43 @@ Requirements:
 `pip install -r requirements.txt`
 
 ## Usage
-To run the main engine and use the in-house shell:
-`python engine.py --mode shell`
+* To run the main engine and use the in-house shell:
 
-[Experimental]
-To use the server-client functionality
-`python server.py --port 2340`
+    `python engine.py --mode shell`
+    
+    This inhouse shell directly interacts with the database object
 
-`python client.py --server_ip localhost --server_port 2340`
+
+* [Experimental] : To use the server-client functionality
+
+    `python server.py --port 2340`
+
+    `python client.py --server_ip localhost --server_port 2340`
 
 ## Features
+* On server shell
+* Client-Server setup
+* Various persistence options:
+    * Time interval based parallel RDB serialization (Emulates Redis RDB serialization)
+    * Log based serialization (Emulates Redis AOF)
+    * Hybrid RDB + AOF Journalling (Work in Progress)
+  
+* Variety of Redis commands supported (All commands supported with all the options supported by Redis)
+    Note: Use `-` as a prefix character for options, eg `Redis> SET key val -NX`)
+    * GET
+    * SET
+    * EXPIRE
+    * SELECT
+    * DESELECT
+    * TTL
+    * DEL
+    * ZADD
+    * ZRANK
+    * ZRANGE
+* Robust parser for Redis commands. Detects positional and optional arguments, ensures correct argument logic and
+ type consistency, just like regular linux utilities.
+* Helpful output message for commands. For example, use `Redis> GET -h` to output a helpful description of the COMMAND
+
 
 
 ## Questions Answered

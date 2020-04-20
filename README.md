@@ -14,7 +14,7 @@ Requirements:
 ## Usage
 * To run the main engine and use the in-house shell:
 
-    `python engine.py --mode shell`
+    `python engine.py`
     
     This inhouse shell directly interacts with the database object
 
@@ -26,7 +26,7 @@ Requirements:
     `python client.py --server_ip localhost --server_port 2340`
 
 ## Features
-* On server shell
+* On server redis shell
 * Client-Server setup
 * Various persistence options:
     * Time interval based parallel RDB serialization (Emulates Redis RDB serialization)

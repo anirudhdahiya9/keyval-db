@@ -627,7 +627,6 @@ def connect_server(args):
 # IDEA: Not all logs required, only log the state changing logs for database
 if __name__=="__main__":
     parser = argparse.ArgumentParser(description='A python implementation for simple Redis-like database engine.')
-    parser.add_argument('--mode', type=str, required=True)
     parser.add_argument('--database_path', type=str, default='databases')
     parser.add_argument('--log_path', type=str, default='logs')
     parser.add_argument('--RDB_persistence', type=bool, default=True, help="True if RDB persistence needed.")

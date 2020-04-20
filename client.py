@@ -1,14 +1,17 @@
-from main import CommandParser
 import shlex
 import zmq
+import argparse
+from utils import CommandParser
 
 
 class ClientSession:
-    def __init__(self, port):
-        self.__known_commands = {'SELECT', 'DESELECT', 'GET', 'SET', 'EXPIRE', 'TTL', 'DEL', 'ZADD', 'ZRANK', 'ZRANGE'}
+    def __init__(self, args):
+        self.__known_commands = {'SELECT', 'DESELECT', 'GET', 'SET', 'EXPIRE', 'TTL', 'DEL', 'ZADD', 'ZRANK', 'ZRANGE',
+                                 'EXIT'}
         self.__parsers = {}
         self.__init_parsers()
-        self.server_port = port
+        self.server_host = args.server_host
+        self.server_port = args.server_port
         self.__context = None
         self.__socket = None
 
@@ -33,7 +36,7 @@ class ClientSession:
     def connect(self):
         self.__context = zmq.Context()
         self.__socket = self.__context.socket(zmq.REQ)
-        self.__socket.connect("tcp://localhost:%s" % self.server_port)
+        self.__socket.connect(f"tcp://{self.server_host}:{self.server_port}")
 
     def __process_command(self, user_input):
         self.__socket.send_string(user_input)
@@ -55,12 +58,16 @@ class ClientSession:
 
 
 def main(args):
-    portnum = 8234
-    session = ClientSession(portnum)
+    session = ClientSession(args)
     session.connect()
     session.shell()
 
 
 if __name__=="__main__":
-    #USE PARSER TO GET SERVER PORT, IP IF YOU WANT
-    main(None)
+    parser = argparse.ArgumentParser(description='Redis Client: A python implementation for simple Redis-like '
+                                                 'database engine.')
+    parser.add_argument('--server_host', default='localhost', help='Host Address for the server.')
+    parser.add_argument('--server_port', default='5698', help='Host Port for the server.')
+
+    args = parser.parse_args()
+    main(args)

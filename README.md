@@ -21,10 +21,16 @@ There are primarily two modes of execution:
 
 
 * To use the server-client functionality
+    
+    * Spin up a server, use `--port` to configure a non-default port.
 
-    `python server.py --port 2340`
+        `python server.py`
+    
+    * Spin up multiple clients, use `--server_port` and `--server_host` options to configure non-default connections.
 
-    `python client.py --server_ip localhost --server_port 2340`
+        `python client.py`
+
+Note: Checkout `python FILENAME.py -h` for full range of implemented configuration options.
 
 ## Features
 * On server redis shell

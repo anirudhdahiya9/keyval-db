@@ -3,7 +3,7 @@ import shutil
 import logging
 from multiprocessing import Lock
 import time
-from datastructures import Value, MySortedSet
+from .datastructures import Value, MySortedSet
 
 db_map = {}
 db_lock = Lock()

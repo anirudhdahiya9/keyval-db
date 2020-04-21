@@ -1,0 +1,9 @@
+SELECT new hi
+SELECT new
+GET a
+SET a
+SET a 4
+SET b 6
+SET c 8
+EXPIRE b 0
+TTL b
